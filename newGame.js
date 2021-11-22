@@ -88,11 +88,15 @@ function onClickFunction() {
                             setTimeout(function () {
                                 temp[0].delete();
                                 temp[1].delete();
-                                countWin++;
                                 console.log(countWin);
                                 canClick = true;
                                 temp = [];
                             }, 1000)
+                            countWin++;
+                            if (countWin === 10) {
+                                console.alert("you win");
+                            }
+
                             return true;
                         }
                         else {
