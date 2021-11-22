@@ -1,18 +1,5 @@
 import { Cover } from "./Cover.js";
 import { Label } from "./Label.js";
-import { Node } from "./Node.js";
-
-// function createMask() {
-//     var mask = document.createElement("div");
-//     document.body.appendChild(mask);
-//     mask.style.width = "500px";
-//     mask.style.height = "500px";
-//     // mask.style.backgroundColor = "orange";
-//     // mask.style.visibility = "visible";
-//     mask.style.display = "initial";
-
-// }
-// createMask();
 
 let randomizedArray = shuffle();
 function shuffle() {
@@ -83,12 +70,11 @@ function addElement(cover, i, j, cardIndex) {
     cover.view.addEventListener("click", _onClickFunc);
 }
 
+let countWin = 0;
 
 function onClickFunction() {
     if (canClick) {
-        let index = this.index
-        // console.log(this.index, this.image);
-        // console.log(this.children);
+        let index = this.index;
         temp.push(cardList[index]);
         this.children[0].hide();
         this.open();
@@ -97,15 +83,13 @@ function onClickFunction() {
             if (!temp[0].del && !temp[1].del) {
                 canClick = false;
                 let checkCard = function () {
-
                     if (temp[0].index !== temp[1].index) {
                         if (temp[0].image === temp[1].image) {
                             setTimeout(function () {
                                 temp[0].delete();
                                 temp[1].delete();
-                                winList.push(temp[0]);
-                                winList.push(temp[1]);
-                                console.log(winList);
+                                countWin++;
+                                console.log(countWin);
                                 canClick = true;
                                 temp = [];
                             }, 1000)
@@ -196,6 +180,7 @@ function coinChange(cover, diff) {
 
 function createScoreBoard(coin, diff) {
     let cover = new Cover();
+
     document.body.appendChild(cover.view);
     cover.view.style.width = 90 * 5 + "px";
     cover.view.style.backgroundColor = "#00ffff";
@@ -214,7 +199,7 @@ function createScoreBoard(coin, diff) {
             element.delete();
         });
     }
-    if (winList.length > 19) {
+    if (countWin === 10) {
         label.string = "VICTORY !!!";
         label.view.style.fontSize = "50px";
     }
